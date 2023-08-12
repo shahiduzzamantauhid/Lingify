@@ -7,6 +7,8 @@ import Instractors from "../Components/Pages/InstractorPage/Instractors";
 import Instractor from "../Components/Pages/InstractorPage/Username";
 import MainLayout from "../Layout/MainLayout";
 import { createBrowserRouter } from "react-router-dom";
+import Login from "../Components/Pages/auth/Login";
+import SignUp from "../Components/Pages/auth/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -37,8 +39,17 @@ const router = createBrowserRouter([
         path: "/course",
         element: <SingleCourse />,
       },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      }
     ],
   },
+  
   {
     path: "*",
     element: <ErrorPage />,
