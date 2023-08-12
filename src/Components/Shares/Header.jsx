@@ -3,7 +3,7 @@ import Logo from "../../assets/images/LingiFy.png";
 const Header = () => {
   return (
     <div className="bg-white shadow-xl">
-      <div className="navbar w-11/12 mx-auto">
+      <div className="navbar mx-auto">
         <div className="navbar-start lg:w-2/12">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -70,6 +70,8 @@ const Header = () => {
         </div>
         <div className="navbar-end">
           <NavLink to="/login" className="btn btn-secondary">Log in</NavLink>
+
+          {/* TODO :  */}
           {/* <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">

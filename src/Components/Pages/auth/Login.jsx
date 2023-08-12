@@ -1,6 +1,17 @@
 import { Link } from "react-router-dom";
+import useAuthContext from "../../Hooks/useAuthContext";
 
 const Login = () => {
+  const { signInWithGoogle } = useAuthContext();
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result); // TODO: Add a toast message or Alert
+      })
+      .catch((error) => {
+        console.log(error.message); // TODO: Add a toast message or Alert
+      });
+  };
   return (
     <div className="flex h-[80vh] bg-gray-100">
       <div className="m-auto p-6 rounded-lg shadow-lg bg-white w-96">
@@ -37,13 +48,20 @@ const Login = () => {
             />
             <Link className="mt-1 italic">Forget Password?</Link>
           </div>
-            <p className="mb-2">New In Lingify? <Link to="/signup" className="font-semibold text-primary">Register</Link></p>
+          <p className="mb-2">
+            New In Lingify?{" "}
+            <Link to="/signup" className="font-semibold text-primary">
+              Register
+            </Link>
+          </p>
           <button className="btn btn-primary w-full" type="submit">
             Login
           </button>
-          <button className="btn btn-primary btn-outline mt-2 w-full" type="submit">
+          <a onClick={handleGoogleLogin}
+            className="btn btn-primary btn-outline mt-2 w-full"
+          >
             Login With Google
-          </button>
+          </a>
         </form>
       </div>
     </div>
