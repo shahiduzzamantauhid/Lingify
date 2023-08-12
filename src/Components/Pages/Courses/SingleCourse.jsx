@@ -1,9 +1,18 @@
+import { Helmet } from "react-helmet";
+import PageToper from "../../Shares/PageToper";
 
 const singleCourse = () => {
     return (
-        <div>
-            hello world
-        </div>
+        <>
+            <Helmet>
+                <title>Course | Lingify</title>
+            </Helmet>
+            <PageToper
+                pageName="IELTS Level B1"
+                prePageName="Courses"
+                pageUrl="Course"
+            />
+        </>
     );
 };
 

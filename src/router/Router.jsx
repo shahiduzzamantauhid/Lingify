@@ -15,34 +15,34 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home/>,
+        element: <Home />,
       },
       {
         path: "/instractors",
-        element: <Instractors/>,
+        element: <Instractors />,
       },
       {
         path: "/courses",
-        element: <Courses/>,
+        element: <Courses />,
       },
       {
         path: "/instractors/username",
-        element: <Instractor/>,
+        element: <Instractor />,
       },
       {
         path: "/category",
-        element: <CategoryPage/>,
+        element: <CategoryPage />,
       },
       {
         path: "/course",
-        element: <SingleCourse/>,
-      }
-    ]
+        element: <SingleCourse />,
+      },
+    ],
   },
   {
     path: "*",
-    element: <ErrorPage/>
-  }
+    element: <ErrorPage />,
+  },
 ]);
 
 export default router;

@@ -16,7 +16,7 @@ const CategoryPage = () => {
             <div className="w-10/12 mx-auto">
         <div className="lg:w-4/6 mx-auto">
           <h2 className="text-center text-5xl font-bold mt-40 mb-8">
-            Level up English Skill
+            Scale Up Your English Skill
           </h2>
           <h2 className="text-center text-xl mb-16">
             Our interactive teaching method engages you in the learning process
