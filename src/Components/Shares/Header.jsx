@@ -1,6 +1,16 @@
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../assets/images/LingiFy.png";
+import { useContext } from "react";
+import { AuthContext } from "../Providers/AuthProviders";
 const Header = () => {
+  const {user, logOut} = useContext(AuthContext);
+  
+  console.log(user);
+  const handleLogout = () => {
+    logOut()
+    .then(() => {} )
+    .catch();
+  }
   return (
     <div className="bg-white shadow-xl">
       <div className="navbar mx-auto">
@@ -69,26 +79,18 @@ const Header = () => {
           </ul>
         </div>
         <div className="navbar-end">
-          <NavLink to="/login" className="btn btn-secondary">Log in</NavLink>
-
-          {/* TODO :  */}
-          {/* <div className="dropdown dropdown-end">
+          {!user && <NavLink to="/login" className="btn btn-secondary">Log in</NavLink> || <div className="dropdown dropdown-end">
       <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
-          <img src={User.image} />
+          <img src={!user && "http://gg.gg/148o34" || user.photoURL} />
         </div>
       </label>
       <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-        <li>
-          <a className="justify-between">
-            Profile
-            <span className="badge">New</span>
-          </a>
-        </li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        
+        <li> <Link onClick={handleLogout} className="between">Dashboard</Link></li>
+        <li> <Link onClick={handleLogout} className="between">Logout</Link></li>
       </ul>
-    </div> */}
+    </div>}
 
         </div>
       </div>

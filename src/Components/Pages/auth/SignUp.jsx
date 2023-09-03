@@ -1,20 +1,72 @@
+import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../Providers/AuthProviders";
+import { updateProfile } from "firebase/auth";
 
 
 const SignUp = () => {
+  const {createUser} = useContext(AuthContext);
+  const {signInWithGoogle}= useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+    const handleSignup = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const name = form.name.value;
+        const photourl = form.photourl.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        form.reset()
+
+        createUser(email,password)
+        .then(result =>{
+          const user = result.user;
+          handleNamePhotourl(user,name,photourl);
+        })
+    }
+    const handleNamePhotourl = (user,name,photourl) => {
+      updateProfile(user, {
+        displayName: name,
+        photoURL: photourl,
+        }).then(() => {
+        // Profile updated!
+        });
+    }
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result); // TODO: Add a toast message or Alert
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: error.message,
+          showConfirmButton: false,
+          timer: 1500
+        }); // TODO: Add a toast message or Alert
+      });
+  };
   return (
+    <><Helmet>
+      <title>SignUp</title>
+    </Helmet>
     <div className="flex h-screen bg-gray-100">
       <div className="m-auto p-6 rounded-lg shadow-lg bg-white w-96">
         <h2 className="text-2xl font-semibold mb-4">SignUp</h2>
-        <form>
+        <form onSubmit={handleSignup}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username
+              Name
             </label>
             <input
               className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
               type="text"
               id="username"
-              name="username"
+              name="name"
               placeholder="Enter your username"
             />
           </div>
@@ -42,9 +94,24 @@ const SignUp = () => {
               placeholder="Enter your password"
             />
           </div>
-          <input type="file" name="Photo" id=""
-            className="mb-4 file-input w-full "
-          />
+          <div className="mb-6">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              Photo Url
+            </label>
+            <input
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+              type="text"
+              id="imgUrl"
+              name="photourl"
+              placeholder="Your Photo Url"
+            />
+          </div>
+          <p className="mb-2">
+            Already have an account?{" "}
+            <Link to="/login" className="font-semibold text-primary">
+              Log in
+            </Link>
+          </p>
           <button
             className="w-full btn btn-primary"
             type="submit"
@@ -52,8 +119,14 @@ const SignUp = () => {
             Register
           </button>
         </form>
+        <a onClick={handleGoogleLogin}
+            className="btn btn-primary btn-outline mt-2 w-full"
+          >
+            Login With Google
+          </a>
       </div>
     </div>
+    </>
   );
 };
 

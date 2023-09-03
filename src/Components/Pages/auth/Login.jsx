@@ -1,22 +1,60 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useAuthContext from "../../Hooks/useAuthContext";
+import { useContext } from "react";
+import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
+import { AuthContext } from "../../Providers/AuthProviders";
 
 const Login = () => {
   const { signInWithGoogle } = useAuthContext();
+  const {signIn} = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        
+        signIn(email,password)
+        .then(() =>{
+          form.reset();
+          navigate(from, {replace: true});
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: errorMessage,
+          });
+      });
+    }
   const handleGoogleLogin = () => {
     signInWithGoogle()
       .then((result) => {
         console.log(result); // TODO: Add a toast message or Alert
       })
       .catch((error) => {
-        console.log(error.message); // TODO: Add a toast message or Alert
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: error.message,
+          showConfirmButton: false,
+          timer: 1500
+        }); // TODO: Add a toast message or Alert
       });
   };
   return (
+    <><Helmet>
+      <title>Login</title>
+    </Helmet>
+
     <div className="flex h-[80vh] bg-gray-100">
       <div className="m-auto p-6 rounded-lg shadow-lg bg-white w-96">
         <h2 className="text-2xl font-semibold mb-4 text-center">Login</h2>
-        <form>
+        <form onSubmit={handleLogin}>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -25,12 +63,11 @@ const Login = () => {
               Email
             </label>
             <input
-              className="input input-primary w-full"
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Enter your Email"
-            />
+                  type="email"
+                  placeholder="example@gmail.com"
+                  className="input input-primary w-full"
+                  name="email"
+                />
           </div>
           <div className="mb-6">
             <label
@@ -57,14 +94,15 @@ const Login = () => {
           <button className="btn btn-primary w-full" type="submit">
             Login
           </button>
-          <a onClick={handleGoogleLogin}
+        </form>
+        <a onClick={handleGoogleLogin}
             className="btn btn-primary btn-outline mt-2 w-full"
           >
             Login With Google
           </a>
-        </form>
       </div>
     </div>
+    </>
   );
 };
 
