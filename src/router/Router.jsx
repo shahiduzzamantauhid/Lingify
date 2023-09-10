@@ -9,6 +9,13 @@ import MainLayout from "../Layout/MainLayout";
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../Components/Pages/auth/Login";
 import SignUp from "../Components/Pages/auth/SignUp";
+import PrivateRoute from "../router/PrivateRoute";
+import Dashboard from "../Layout/Dashboard";
+import AllUsers from "../Components/Pages/UnderDashboard/AllUsers";
+import AddCourse from "../Components/Pages/UnderDashboard/AddCourse";
+import Instructors from "../Components/Pages/UnderDashboard/Instructors";
+import Cart from "../Components/Pages/UnderDashboard/Cart";
+import Students from "../Components/Pages/UnderDashboard/Students";
 
 const router = createBrowserRouter([
   {
@@ -25,15 +32,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/courses",
-        element: <Courses />,
+        element: (
+          <PrivateRoute>
+            <Courses />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/instractors/username",
         element: <Instractor />,
-      },
-      {
-        path: "/category",
-        element: <CategoryPage />,
       },
       {
         path: "/course",
@@ -46,10 +53,35 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
-      }
+      },
     ],
   },
-  
+  {
+    path: "/dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+      path: "/dashboard/allusers",
+      element: <AllUsers />,
+    },
+    {
+      path: "/dashboard/addcourse",
+      element: <AddCourse />,
+    },
+    {
+      path: "/dashboard/instructors",
+      element: <Instructors />,
+    },
+    {
+      path: "/dashboard/cart",
+      element: <Cart />,
+    },
+    {
+      path: "/dashboard/students",
+      element: <Students />,
+    },
+    ]
+  },
   {
     path: "*",
     element: <ErrorPage />,

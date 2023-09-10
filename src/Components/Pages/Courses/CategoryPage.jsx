@@ -9,7 +9,7 @@ const CategoryPage = () => {
                 <title>Course Category | Lingify</title>
             </Helmet>
             <PageToper
-                pageName="English Courses"
+                pageName="Courses"
                 prePageName="Courses"
                 currentPage="Category"
             />

@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut} from "firebase/auth";
 import app from "../../firebase/firebase.config";
 import Swal from "sweetalert2";
+import { BiLogoMongodb } from "react-icons/bi";
 
 export const AuthContext = createContext();
 
@@ -14,13 +15,6 @@ const AuthProviders = ({children}) => {
 
     const createUser = (email, password)=>{
         setLoading(true);
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Account Created Successfully',
-            showConfirmButton: false,
-            timer: 1500
-          })
         return createUserWithEmailAndPassword(auth, email, password);
         
     }
@@ -57,6 +51,8 @@ const AuthProviders = ({children}) => {
             return unsubscribe()
         }
     },[]);
+    // to get all user info from the Mongodb 
+
     const authInfo = {
         user,
         loading,
